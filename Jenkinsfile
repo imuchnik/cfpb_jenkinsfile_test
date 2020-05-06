@@ -1,7 +1,8 @@
+@Library('prUtils') _
 pipeline {
     agent any
     environment {
-      TEST_VAR = sh(
+        TEST_VAR = sh(
           returnStdout: true,
           script: "echo 'ORIGINAL'"
           )
@@ -11,7 +12,6 @@ pipeline {
             steps {
 
                 script {
-                    prUtils = load './prUtils.groovy'
                     PR = sh(
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls/${env.CHANGE_ID} | jq .state",
                             returnStdout: true
