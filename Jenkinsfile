@@ -7,10 +7,11 @@ pipeline {
           script: "echo 'ORIGINAL'"
           )
     }
-    library 'prUtils'
+
     stages {
         stage('Original') {
             steps {
+                library 'prUtils'
 
                 script {
                     PR = sh(
