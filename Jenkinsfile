@@ -1,4 +1,4 @@
-@Library('prUtils') _
+
 pipeline {
     agent any
     environment {
@@ -7,6 +7,7 @@ pipeline {
           script: "echo 'ORIGINAL'"
           )
     }
+    library 'prUtils'
     stages {
         stage('Original') {
             steps {
