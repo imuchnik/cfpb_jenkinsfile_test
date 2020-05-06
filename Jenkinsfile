@@ -9,8 +9,9 @@ pipeline {
     stages {
         stage('Original') {
             steps {
-                 prUtils = load './prUtils.groovy'
+
                 script {
+                    prUtils = load './prUtils.groovy'
                     PR = sh(
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls/${env.CHANGE_ID} | jq .state",
                             returnStdout: true
