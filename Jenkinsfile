@@ -1,3 +1,4 @@
+import groovy.json.JsonSlurper
 
 pipeline {
     agent any
@@ -14,6 +15,7 @@ pipeline {
                 library 'prUtils'
 
                 script {
+
                     PR = sh(
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls/${env.CHANGE_ID} | jq .state",
                             returnStdout: true
