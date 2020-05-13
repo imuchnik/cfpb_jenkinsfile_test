@@ -26,7 +26,7 @@ pipeline {
 //                    prUtils $PR_List
                 }
               sh "echo the PR is ${PR}"
-              sh "echo the closed PR is ${PR_List}"
+              sh "echo the closed PR is $PR_List"
                 }
         }
         stage('Env modification') {
