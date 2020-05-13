@@ -1,5 +1,4 @@
-import groovy.json.JsonSlurper
-
+@Library('prUtils')_
 pipeline {
     agent any
     environment {
@@ -24,10 +23,10 @@ pipeline {
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls",
                             returnStdout: true
                     )
-                    target = prUtils.findClosedPrs(PR_List)
+                    prUtils $PR_List
                 }
               sh "echo the PR is ${PR}"
-              sh "echo the closed PR is ${target}"
+              sh "echo the closed PR is ${PR_List}"
                 }
         }
         stage('Env modification') {
