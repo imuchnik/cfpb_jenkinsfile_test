@@ -23,7 +23,7 @@ pipeline {
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls",
                             returnStdout: true
                     )
-                    prUtils $PR_List
+//                    prUtils $PR_List
                 }
               sh "echo the PR is ${PR}"
               sh "echo the closed PR is ${PR_List}"
