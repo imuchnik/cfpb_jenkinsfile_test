@@ -1,11 +1,11 @@
-@Library('prUtils')_
+@Library('prUtils') _
 pipeline {
     agent any
     environment {
         TEST_VAR = sh(
-          returnStdout: true,
-          script: "echo 'ORIGINAL'"
-          )
+                returnStdout: true,
+                script: "echo 'ORIGINAL'"
+        )
     }
 
     stages {
@@ -22,20 +22,21 @@ pipeline {
                     PR_List = sh(
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls",
                             returnStdout: true
-                    )
+                    ).trim()
 //                    prUtils $PR_List
+//                }
+                    sh "echo the PR is ${PR}"
+                    sh "echo ******************************"
+                    sh "echo the closed PR is ${PR_List}"
                 }
-              sh "echo the PR is ${PR}"
-              sh "echo the closed PR is $PR_List"
-                }
-        }
-        stage('Env modification') {
-            steps {
-                withEnv(["TEST_VAR=${TEST_VAR}"]) {
-                    sh 'echo PR status is $PR'
-                    sh 'env|sort'
+            }
+            stage('Env modification') {
+                steps {
+                    withEnv(["TEST_VAR=${TEST_VAR}"]) {
+                        sh 'echo PR status is $PR'
+                        sh 'env|sort'
+                    }
                 }
             }
         }
     }
-}
