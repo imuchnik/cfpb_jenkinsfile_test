@@ -24,20 +24,21 @@ pipeline {
                             returnStdout: true
                     ).trim()
 //                    prUtils $PR_List
-//                }
-                    sh "echo the PR is ${PR}"
-                    sh "echo ******************************"
-                    sh "echo the closed PR is ${PR_List}"
                 }
+                sh "echo the PR is ${PR}"
+                sh "echo ******************************"
+                sh "echo the closed PR is ${PR_List}"
+
             }
-            stage('Env modification') {
-                steps {
-                    withEnv(["TEST_VAR=${TEST_VAR}"]) {
-                        sh 'echo PR status is $PR'
-                        sh 'env|sort'
-                    }
+        }
+        stage('Env modification') {
+            steps {
+                withEnv(["TEST_VAR=${TEST_VAR}"]) {
+                    sh 'echo PR status is $PR'
+                    sh 'env|sort'
                 }
             }
         }
     }
 }
+
