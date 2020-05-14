@@ -20,7 +20,7 @@ pipeline {
                             returnStdout: true
                     )
                     PR_List = sh(
-                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed",
+                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed | jq '.[] | .number' ",
                             returnStdout: true
                     ).trim()
 //                    prUtils $PR_List
