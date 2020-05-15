@@ -17,7 +17,7 @@ pipeline {
                     PR_List = sh(
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed | jq  -c -r  '.[] | .number' ",
                             returnStdout: true
-                    ).trim()
+                    ).trim().split(" ")
                     print("${PR_List}")
                 }
                 sh "echo the PR is ${PR}"
