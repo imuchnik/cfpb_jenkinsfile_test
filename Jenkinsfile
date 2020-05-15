@@ -20,7 +20,7 @@ pipeline {
                     ).trim()
                    println(PR_List)
                 }
-                sh "Hope this does not fail"
+                sh "echo Hope this does not fail"
                 sh "echo the PR is ${PR}"
                 sh "echo the closed PR is ${PR_List}"
                 sh 'env | sort'
