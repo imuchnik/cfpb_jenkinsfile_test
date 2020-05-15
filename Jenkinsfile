@@ -18,7 +18,7 @@ pipeline {
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed | jq '.[] | .number' ",
                             returnStdout: true
                     ).trim()
-                   println(${PR_List})
+                   println(PR_List)
                 }
                 sh "Hope this does not fail"
                 sh "echo the PR is ${PR}"
