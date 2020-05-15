@@ -4,6 +4,17 @@ pipeline {
 
 
     stages {
+        stage('Init') {
+            steps {
+                script {
+                    // Replace all special characters with '-'
+                    String stackBaseName = dockerStack.sanitizeStackName(env.JOB_BASE_NAME)
+                    env.IMAGE_TAG="${stackBaseName}-${BUILD_NUMBER}"
+                }
+                sh 'echo "${stackBaseName}"'
+                sh 'env | sort'
+            }
+        }
         stage('Original') {
             steps {
                 library 'prUtils'
@@ -20,7 +31,6 @@ pipeline {
                     ).trim().split('\n')[0]
                     print("${PR_List}")
                 }
-//                prUtils(PR_List)
                 sh "echo the PR is ${PR}"
                 sh "echo the closed PR is '${PR_List}'"
             }
