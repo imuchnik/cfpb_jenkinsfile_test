@@ -23,7 +23,7 @@ pipeline {
                 sh "Hope this does not fail"
                 sh "echo the PR is ${PR}"
                 sh "echo the closed PR is ${PR_List}"
-                sh 'env|sort'
+                sh 'env | sort'
 
             }
         }
