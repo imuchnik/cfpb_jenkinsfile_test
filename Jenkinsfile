@@ -1,12 +1,7 @@
 @Library('prUtils') _
 pipeline {
     agent any
-    environment {
-        TEST_VAR = sh(
-                returnStdout: true,
-                script: "echo 'ORIGINAL'"
-        )
-    }
+
 
     stages {
         stage('Original') {
@@ -27,15 +22,8 @@ pipeline {
                 }
                 sh "echo the PR is ${PR}"
                 sh "echo the closed PR is ${PR_List}"
+                sh 'env|sort'
 
-            }
-        }
-        stage('Env modification') {
-            steps {
-                withEnv(["TEST_VAR=${TEST_VAR}"]) {
-                    sh 'echo PR status is $PR'
-                    sh 'env|sort'
-                }
             }
         }
     }
