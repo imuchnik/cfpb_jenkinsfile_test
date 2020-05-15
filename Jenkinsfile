@@ -22,10 +22,6 @@ pipeline {
                 }
                 sh "echo the PR is ${PR}"
                 sh "echo the closed PR is ${PR_List}"
-                sh '''#!/bin/bash
-                    env|sort'''
-                sh '$?'
-
             }
         }
     }
