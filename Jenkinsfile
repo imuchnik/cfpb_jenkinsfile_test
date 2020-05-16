@@ -1,15 +1,21 @@
-import groovy.json.JsonSlurper
 
+@Library('prUtils') _
 pipeline {
     agent any
-    environment {
-        TEST_VAR = sh(
-          returnStdout: true,
-          script: "echo 'ORIGINAL'"
-          )
-    }
+
 
     stages {
+        stage('Init') {
+            steps {
+                script {
+                    // Replace all special characters with '-'
+                    String stackBaseName = dockerStack.sanitizeStackName(env.JOB_BASE_NAME)
+                    env.IMAGE_TAG="${stackBaseName}-${BUILD_NUMBER}"
+                }
+                sh 'echo "${env.JOB_BASE_NAME}"'
+                sh 'env | sort'
+            }
+        }
         stage('Original') {
             steps {
                 library 'prUtils'
@@ -21,22 +27,13 @@ pipeline {
                             returnStdout: true
                     )
                     PR_List = sh(
-                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls",
+                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed | jq  -c -r  '.[] | .number' ",
                             returnStdout: true
-                    )
-                    target = prUtils.findClosedPrs(PR_List)
+                    ).trim().split('\n')[0]
                 }
-              sh "echo the PR is ${PR}"
-              sh "echo the closed PR is ${target}"
-                }
-        }
-        stage('Env modification') {
-            steps {
-                withEnv(["TEST_VAR=${TEST_VAR}"]) {
-                    sh 'echo PR status is $PR'
-                    sh 'env|sort'
-                }
-            }
-        }
-    }
-}
+                    print("${PR_List}")
+              }
+          }
+      }
+  }
+
