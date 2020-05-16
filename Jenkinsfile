@@ -1,3 +1,4 @@
+
 @Library('prUtils') _
 pipeline {
     agent any
@@ -29,11 +30,10 @@ pipeline {
                             script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed | jq  -c -r  '.[] | .number' ",
                             returnStdout: true
                     ).trim().split('\n')[0]
-                    print("${PR_List}")
                 }
-                sh "echo the PR is ${PR}"
-                sh "echo the closed PR is '${PR_List}'"
-            }
-        }
-    }
-}
+                    print("${PR_List}")
+              }
+          }
+      }
+  }
+
