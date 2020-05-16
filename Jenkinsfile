@@ -11,7 +11,7 @@ pipeline {
                     String stackBaseName = dockerStack.sanitizeStackName(env.JOB_BASE_NAME)
                     env.IMAGE_TAG="${stackBaseName}-${BUILD_NUMBER}"
                 }
-                sh 'echo "${env.JOB_BASE_NAME)}"'
+                sh 'echo "${env.JOB_BASE_NAME}"'
                 sh 'env | sort'
             }
         }
