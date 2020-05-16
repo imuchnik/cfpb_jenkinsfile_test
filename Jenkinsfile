@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-                script {
-                    // Replace all special characters with '-'
-                    String stackBaseName = dockerStack.sanitizeStackName(env.JOB_BASE_NAME)
-                    env.IMAGE_TAG="${stackBaseName}-${BUILD_NUMBER}"
-                }
-                sh 'echo ${env.JOB_BASE_NAME}'
+//                script {
+//                    // Replace all special characters with '-'
+//                    String stackBaseName = dockerStack.sanitizeStackName(env.JOB_BASE_NAME)
+//                    env.IMAGE_TAG="${stackBaseName}-${BUILD_NUMBER}"
+//                }
+//                sh 'echo ${env.JOB_BASE_NAME}'
                 sh 'env | sort'
             }
         }
