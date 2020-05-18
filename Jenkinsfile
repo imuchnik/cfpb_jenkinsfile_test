@@ -7,12 +7,6 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-//                script {
-//                    // Replace all special characters with '-'
-//                    String stackBaseName = dockerStack.sanitizeStackName(env.JOB_BASE_NAME)
-//                    env.IMAGE_TAG="${stackBaseName}-${BUILD_NUMBER}"
-//                }
-//                sh 'echo ${env.JOB_BASE_NAME}'
                 sh 'env | sort'
             }
         }
@@ -21,16 +15,25 @@ pipeline {
                 library 'prUtils'
 
                 script {
-
-                    PR = sh(
-                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls/${env.CHANGE_ID} | jq .state",
-                            returnStdout: true
-                    )
+//
+//                    PR = sh(
+//                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls/${env.CHANGE_ID} | jq .state",
+//                            returnStdout: true
+//                    )
                     PR_List = sh(
-                            script: "curl https://api.github.com/repos/imuchnik/cfpb_jenkinsfile_test/pulls?state=closed | jq  -c -r  '.[] | .number' ",
+                            script: "curl 'https://github.cfpb.gov/api/v3/repos/app-ops/orsee/pulls?state=closed&sort=updated&direction=desc&per_page=20' | jq -c -r  '.[] | .number' ",
                             returnStdout: true
                     ).trim().split('\n')[0]
                 }
+                    PR_List.each{ pr ->
+                        print("PR  number is ${pr}")
+                        if (dockerStack.exists("orsee-pr-${pr}")){
+                            dockerStack.remove("orsee-pr-${pr}")
+                        }
+
+                    }
+
+                dockerStack.
                     print("${PR_List}")
               }
           }
