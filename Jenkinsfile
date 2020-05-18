@@ -12,7 +12,6 @@ pipeline {
         }
         stage('Original') {
             steps {
-                library 'prUtils'
 
                 script {
                     PR_List = sh(
